@@ -1,5 +1,6 @@
-import { Box, Button, Center, Container, Input, Link, Stack, Text } from '@chakra-ui/react';
+import { Box, Button, Center, Container, Link, Stack, Text } from '@chakra-ui/react';
 import { useState } from 'react';
+import InputPrimary from '../components/input';
 import { rupiahFormatted } from '../helper';
 import Meta from '../meta';
 
@@ -22,10 +23,16 @@ export default function Home() {
 
 		// harga sebelum nya adalah harga normal
 		setBeforePrice(normalPrice);
-		// jika hasil diskon lebih besar dari mak kesbek, maka tampilkan mak kesbek
-		setTotalCashback(__calc > maxCashback ? maxCashback : __calc);
-		// jika hasil diskon lebih besar dari mak kesbek, maka hitung normal price dikurang mak kesbek
-		setTotalPayment(__calc > maxCashback ? __totalPayment2 : __totalPayment1);
+
+		if (maxCashback === '0') {
+			setTotalCashback(__calc > maxCashback ? maxCashback : __calc);
+			setTotalPayment(__totalPayment1);
+		} else {
+			// jika hasil diskon lebih besar dari mak kesbek, maka tampilkan mak kesbek
+			setTotalCashback(__calc > maxCashback ? maxCashback : __calc);
+			// jika hasil diskon lebih besar dari mak kesbek, maka hitung normal price dikurang mak kesbek
+			setTotalPayment(__calc > maxCashback ? __totalPayment2 : __totalPayment1);
+		}
 	}
 
 	const disabledBtn = normalPrice.length === 0 || percentage.length === 0 || maxCashback.length === 0;
@@ -53,33 +60,31 @@ export default function Home() {
 								<Box px='15px' width={{ base: '100%', md: '40%' }}>
 									<Stack mb='4'>
 										<Text>Harga Normal</Text>
-										<Input
+										<InputPrimary
+											id='normal-price'
 											value={normalPrice}
-											onChange={(e) => setNormalPrice(e.target.value)}
-											variant='outline'
+											onChange={(value) => setNormalPrice(value)}
 											placeholder='Harga normal...'
-											type='number'
 										/>
 									</Stack>
 
 									<Stack mb='4'>
 										<Text>Jumlah Persen</Text>
-										<Input
+										<InputPrimary
+											id='percentage'
+											isPercentage
 											value={percentage}
-											onChange={(e) => setPercentage(e.target.value)}
-											variant='outline'
+											onChange={(value) => setPercentage(value)}
 											placeholder='Jumlah persen...'
-											type='number'
 										/>
 									</Stack>
 
 									<Stack>
 										<Text>Maksimal Cashback</Text>
-										<Input
-											type='number'
+										<InputPrimary
+											id='max-cashback'
 											value={maxCashback}
-											onChange={(e) => setMaxCashback(e.target.value)}
-											variant='outline'
+											onChange={(value) => setMaxCashback(value)}
 											placeholder='Maksimal cashback...'
 										/>
 									</Stack>
