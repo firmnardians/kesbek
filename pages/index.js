@@ -1,7 +1,7 @@
 import { Box, Button, Center, Container, Input, Link, Stack, Text } from '@chakra-ui/react';
-import Head from 'next/head';
 import { useState } from 'react';
 import { rupiahFormatted } from '../helper';
+import Meta from '../meta';
 
 export default function Home() {
 	const [normalPrice, setNormalPrice] = useState('');
@@ -32,10 +32,7 @@ export default function Home() {
 
 	return (
 		<>
-			<Head>
-				<title>Kesbek Maksimal</title>
-				<meta name='desc' content='Hitung cashback dengan harga maksimal tanpa ribet.' />
-			</Head>
+			<Meta title='Kesbek Maksimal' desc='Hitung cashback dengan harga maksimal tanpa ribet.' />
 
 			<main>
 				<Container px={{ base: 0, md: 5 }} py={{ base: 0, md: 10 }} maxW='4xl' centerContent>
